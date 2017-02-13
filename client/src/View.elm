@@ -122,8 +122,8 @@ controls =
             , style [ ( "margin", "0 auto" ) ]
             ]
             (List.map (uncurry simpleButton)
-                [ ( "Set Name", SetName "Kris" )
-                , ( "Set Color", SetColor "#0000ff" )
+                [ ( "Set Name", SetName "Parma ham" )
+                , ( "Set Color", SetColor "#dd0000" )
                 , ( "Left", Move <| Coords -1.0 0 )
                 , ( "Up", Move <| Coords 0.0 -1.0 )
                 , ( "Down", Move <| Coords 0.0 1.0 )

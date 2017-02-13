@@ -8,11 +8,12 @@ import RemoteData exposing (RemoteData(..))
 import Response exposing (..)
 import Types exposing (..)
 import WebSocket
+import Keyboard
 
 
 websocketEndpoint : String
 websocketEndpoint =
-    "ws://localhost:8000"
+    "ws://game.clearercode.com:8000"
 
 
 init : Response Model Msg
@@ -37,6 +38,24 @@ update msg model =
                 |> E.encode 0
                 |> WebSocket.send websocketEndpoint
             )
+
+        KeyMsg code ->
+            let _ = Debug.log "keycode" code in
+            case code of
+                56 ->
+                    -- up
+                    update (GameMsg (Move (Coords 0 -1))) model
+                54 ->
+                    -- right
+                    update (GameMsg (Move (Coords 1 0))) model
+                53 ->
+                    -- down
+                    update (GameMsg (Move (Coords 0 1))) model
+                52 ->
+                    -- left
+                    update (GameMsg (Move (Coords -1 0))) model
+                _ ->
+                    ( model, Cmd.none )
 
 
 encodeGameMsg : GameMsg -> E.Value
@@ -100,4 +119,5 @@ subscriptions model =
         [ WebSocket.listen websocketEndpoint (D.decodeString decodeBoard >> RemoteData.fromResult >> Receive)
         , WebSocket.keepAlive websocketEndpoint
             |> Sub.map (always KeepAlive)
+        , Keyboard.presses KeyMsg
         ]

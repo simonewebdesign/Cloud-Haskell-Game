@@ -1,7 +1,7 @@
 module Types exposing (..)
 
 import RemoteData exposing (RemoteData)
-
+import Keyboard
 
 type alias Coords =
     { x : Float
@@ -39,7 +39,7 @@ type Msg
     = GameMsg GameMsg
     | Receive (RemoteData String Board)
     | KeepAlive
-
+    | KeyMsg Keyboard.KeyCode
 
 type alias Model =
     RemoteData String Board
